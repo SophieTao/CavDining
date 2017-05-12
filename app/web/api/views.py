@@ -32,11 +32,11 @@ def meal(request, cafe_id):
 			post = urllib.parse.urlencode(data).encode('utf-8')
 			try:
 				req2 = urllib.request.Request('http://exp-api:8000/auth/get',post)
-			except ObjectDoesNotExist:
+				resp_json2 = urllib.request.urlopen(req2).read().decode('utf-8')
+				resp2 = json.loads(resp_json2)
+				post2 = urllib.parse.urlencode(resp2).encode('utf-8')
+			except:
 				return render(request, 'api/meal.html', context)
-			resp_json2 = urllib.request.urlopen(req2).read().decode('utf-8')
-			resp2 = json.loads(resp_json2)
-			post2 = urllib.parse.urlencode(resp2).encode('utf-8')
 			listing_info={}
 			listing_info['user_id'] = resp2['user_id']
 			listing_info['item_id'] = resp['id']
